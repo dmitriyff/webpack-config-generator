@@ -1,0 +1,58 @@
+form.app-settings {
+  font-size: 14px;
+
+  > *:first-child {
+    margin-top: 0 !important;
+  }
+
+  h2 {
+    padding-bottom: 0.3em;
+
+    border-bottom: 2px solid #f8f8f8;
+
+    font-weight: 600;
+    line-height: 1.25;
+  }
+
+  fieldset {
+    margin: 20px 0;
+
+    border: 2px solid #f8f8f8;
+    border-radius: 5px;
+
+    font-size: 1rem;
+  }
+
+  fieldset > div {
+    margin: 6px 2px;
+  }
+
+  label {
+    display: inline-flex;
+    align-items: baseline;
+
+    cursor: pointer;
+    line-height: 22px;
+
+    input[type='checkbox'] {
+      position: relative;
+      top: 1px;
+
+      margin: 0;
+      margin-right: 2px;
+    }
+
+    + label {
+      margin-left: 10px;
+    }
+  }
+
+  span {
+    display: inline-block;
+    margin-right: 15px; 
+  }
+
+  legend {
+
+  }
+}

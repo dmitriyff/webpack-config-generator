@@ -1,0 +1,72 @@
+mixin app-settings()
+  form.app-settings
+    h2
+      | Settings
+
+    fieldset(id='style-loader')
+      legend
+        label
+          input(id='use-style-loader' type='checkbox' name='style-loader' value='true')
+          | Use Style
+
+      div
+        label
+          input(id='use-exract-plugin' type='checkbox' name='exract-plugin')
+          | Extract styles
+
+      div
+        span Preprocessor
+
+        label
+          input(id='use-sass-loader' type='checkbox' name='sass-loader')
+          | Sass
+
+        label
+          input(id='use-less-loader' type='checkbox' name='less-loader')
+          | Less
+
+        label
+          input(id='use-stylus-loader' type='checkbox' name='stylus-loader')
+          | Stylus
+
+    fieldset(id='template-engine')
+      legend
+        label
+          input(id='use-template-engine' type='checkbox' name='template-engine' value='true')
+          | Use Template engine
+      div
+        span Template engine
+
+        label
+          input(id='use-pug-engine' type='checkbox' name='pug-engine')
+          | Pug
+
+    fieldset(id='javascript-compiler')
+      legend
+        label
+          | Use JavaScript compiler
+      div
+        span Compilers
+
+        label
+          input(id='use-babel-loader' type='checkbox' name='babel-loader')
+          | Babel
+
+        label
+          input(id='use-ts-loader' type='checkbox' name='ts-loader')
+          | TypeScript
+
+    fieldset(id='assets-loader')
+      legend
+        label
+          input(id='use-file-loader' type='checkbox' name='assets-loader')
+          | Use Assets
+      div
+        label
+          input(id='use-url-loader' type='checkbox' name='url-loader')
+          | Use transforms files into base64 URIs
+
+      div
+        label
+          input(id='use-svg-sprite-loader' type='checkbox' name='svg-sprite-loader')
+          | Use SVG sprite

@@ -1,0 +1,19 @@
+button.app-download {
+  cursor: pointer;
+
+  position: fixed;
+  bottom: 20px;
+  width: 230px;
+
+  border: 2px solid #f8f8f8;
+  border-radius: 5px;
+  background-color: transparent;
+
+  line-height: 2rem;
+
+  &:hover,
+  &:focus {
+    outline: none;
+    border-color: #33aaff;
+  }
+}

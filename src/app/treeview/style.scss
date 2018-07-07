@@ -1,0 +1,63 @@
+.app-treeview {
+  width: calc(100% + 40px);
+  margin: 0 -20px;
+
+  summary {
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  summary::-webkit-details-marker {
+    // display: none;
+    float: left;
+    margin-top: 9px;
+  }
+
+  .file,
+  .folder {
+    padding-left: 1rem;
+
+    cursor: pointer;
+    line-height: 1.8rem;
+
+    &:hover {
+      background-color: #CCC;
+      box-shadow: -200px 0 0 #CCC;
+    }
+
+    &::before {
+      content: '';
+
+      position: relative;
+      top: 1px;
+
+      display: inline-block;
+      width: 24px;
+      height: 14px;
+      
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+  }
+
+  .file {
+    &::before {
+      margin-left: 17px;
+      background-image: url('assets/icons/file.svg');
+    }
+  }
+
+  .folder {
+    &::before {
+      background-image: url('assets/icons/folder.svg');
+    }
+  }
+
+  details > .file,
+  details > details {
+    margin-left: 1rem;
+  }
+}

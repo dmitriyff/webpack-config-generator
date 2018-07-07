@@ -1,0 +1,28 @@
+include ./app/treeview/template
+include ./app/codeview/template
+include ./app/settings/template
+include ./app/download/template
+include ./variables
+
+doctype html
+html
+  head
+    title Webpack Config Generator
+  body
+    header
+      h1 Webpack config generator
+      div
+        a(href='')
+          img(src='assets/github.svg')
+        a(href='' title='Buy me coffee')
+          img(src='assets/donut.svg' width='43px')
+    main
+      section
+        +app-treeview
+        +app-download
+      section
+        +app-codeview
+      section
+        +app-settings
+
+    footer
