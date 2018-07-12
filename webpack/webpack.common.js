@@ -7,7 +7,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 // Constants defines.
 const srcDir = path.resolve('./src');
-const distDir = path.resolve('./dist');
+const distDir = path.resolve('./docs');
 
 module.exports = (env, {
   sourceMap
