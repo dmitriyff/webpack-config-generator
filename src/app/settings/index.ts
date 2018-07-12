@@ -133,7 +133,7 @@ export default class SettingsComponent {
 function getCheckboxInputObservable(selector: string): Observable<boolean> {
   const checkbox = $(selector);
 
-  return fromEvent(checkbox, 'input')
+  return fromEvent(checkbox, 'click')
     .pipe(map(getInputChecked))
     .pipe(startWith(false));
 }
