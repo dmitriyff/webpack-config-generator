@@ -8,25 +8,25 @@ const $ = (selector: string): HTMLElement  => {
 }
 
 export interface ISettings {
-  entry: string;
-  extensions: string[];
+  entry?: string;
+  extensions?: string[];
 
-  useStyleLoader: boolean;
-  useExtractPlugin: boolean;
-  useSassLoader: boolean;
-  useLessLoader: boolean;
-  useStylusLoader: boolean;
+  useStyleLoader?: boolean;
+  useExtractPlugin?: boolean;
+  useSassLoader?: boolean;
+  useLessLoader?: boolean;
+  useStylusLoader?: boolean;
 
-  useTemplateEngine: boolean; 
-  usePugEngine: boolean;
+  useTemplateEngine?: boolean; 
+  usePugEngine?: boolean;
 
-  useBabelLoader: boolean;
-  useTsLoader: boolean;
+  useBabelLoader?: boolean;
+  useTsLoader?: boolean;
 
-  useFileLoader: boolean;
-  useUrlLoader: boolean;
-  urlLimit: number;
-  useSvgSpriteLoader: boolean;
+  useFileLoader?: boolean;
+  useUrlLoader?: boolean;
+  urlLimit?: number;
+  useSvgSpriteLoader?: boolean;
 }
 
 export const DEFAULT_SETTING: ISettings = {
@@ -55,38 +55,41 @@ export default class SettingsComponent {
   private _settingsSbj: BehaviorSubject<any> = new BehaviorSubject({});
   settings$: Observable<any> = this._settingsSbj.asObservable();
 
-  constructor() {
-    console.log('SettingsComponent::constructor');
+  constructor(private _settings: ISettings = {}) {
+    this._settings = {
+      ...DEFAULT_SETTING,
+      ..._settings
+    };
 
     // Style preprocessors section.
     const styleLoader = $('#style-loader');
-    const useStyleLoader$ = getCheckboxInputObservable('#use-style-loader');
-    const useExractPlugin$ = getCheckboxInputObservable('#use-exract-plugin');
-    const useSassLoader$ = getCheckboxInputObservable('#use-sass-loader');
-    const useLessLoader$ = getCheckboxInputObservable('#use-less-loader');
-    const useStylusLoader$ = getCheckboxInputObservable('#use-stylus-loader');
+    const useStyleLoader$ = getCheckboxObservable('#use-style-loader', this._settings.useStyleLoader);
+    const useExractPlugin$ = getCheckboxObservable('#use-exract-plugin', this._settings.useExtractPlugin);
+    const useSassLoader$ = getCheckboxObservable('#use-sass-loader', this._settings.useSassLoader);
+    const useLessLoader$ = getCheckboxObservable('#use-less-loader', this._settings.useLessLoader);
+    const useStylusLoader$ = getCheckboxObservable('#use-stylus-loader', this._settings.useStylusLoader);
     const styleLoader$ = useStyleLoader$
     .pipe(tap(toggleDisabled(styleLoader)));
 
 
     // Template egines section.
     const templateEngine = $('#template-engine');
-    const useTemplateEngine$ = getCheckboxInputObservable('#use-template-engine');
-    const usePugEngine$ = getCheckboxInputObservable('#use-pug-engine');
+    const useTemplateEngine$ = getCheckboxObservable('#use-template-engine', this._settings.useTemplateEngine);
+    const usePugEngine$ = getCheckboxObservable('#use-pug-engine', this._settings.usePugEngine);
     const templateEngine$ = useTemplateEngine$
     .pipe(tap(toggleDisabled(templateEngine)));
 
 
     // JavaScript compilers section.
-    const useBabelLoader$ = getCheckboxInputObservable('#use-babel-loader');
-    const useTsLoader$ = getCheckboxInputObservable('#use-ts-loader');
+    const useBabelLoader$ = getCheckboxObservable('#use-babel-loader', this._settings.useBabelLoader);
+    const useTsLoader$ = getCheckboxObservable('#use-ts-loader', this._settings.useTsLoader);
 
 
     // Assets.
     const assetsLoader = $('#assets-loader');
-    const useFileLoader$ = getCheckboxInputObservable('#use-file-loader');
-    const useUrlLoader$ = getCheckboxInputObservable('#use-url-loader');
-    const useSvgSpriteLoader$ = getCheckboxInputObservable('#use-svg-sprite-loader');
+    const useFileLoader$ = getCheckboxObservable('#use-file-loader', this._settings.useFileLoader);
+    const useUrlLoader$ = getCheckboxObservable('#use-url-loader', this._settings.useUrlLoader);
+    const useSvgSpriteLoader$ = getCheckboxObservable('#use-svg-sprite-loader', this._settings.useSvgSpriteLoader);
     const assetsLoader$ = useFileLoader$
     .pipe(tap(toggleDisabled(assetsLoader))); 
 
@@ -130,12 +133,13 @@ export default class SettingsComponent {
   }
 }
 
-function getCheckboxInputObservable(selector: string): Observable<boolean> {
-  const checkbox = $(selector);
+function getCheckboxObservable(selector: string, value: boolean = false): Observable<boolean> {
+  const checkbox = $(selector) as HTMLInputElement;
+  checkbox.checked = value;
 
   return fromEvent(checkbox, 'click')
     .pipe(map(getInputChecked))
-    .pipe(startWith(false));
+    .pipe(startWith(value));
 }
 
 function getInputChecked(event): boolean {
