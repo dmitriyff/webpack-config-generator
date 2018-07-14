@@ -2,10 +2,10 @@ import './style.scss';
 import { default as TreeView } from './app/treeview';
 import { default as CodeView } from './app/codeview';
 import { default as DownloadComponent } from './app/download';
-import { default as SettingsComponent } from './app/settings';
+import { default as SettingsComponent, ISettings } from './app/settings';
 
 import { BehaviorSubject, from, fromEvent, combineLatest, forkJoin, merge } from 'rxjs';
-import { tap, switchMap, map, filter, mergeMap, concatMap, take } from 'rxjs/operators'
+import { tap, switchMap, map, filter, mergeMap, concatMap, take, skip } from 'rxjs/operators'
 // import { forkJoin } from 'rxjs/observable/forkJoin';
 
 import {
@@ -21,8 +21,12 @@ const $ = (selector: string): NodeListOf<HTMLElement>  => {
 const codeViewNode = $('.app-codeview')[0];
 const codeViewComponent = new CodeView(codeViewNode);
 
-
-const settingsComponent = new SettingsComponent();
+const settings = {};
+const urlParams = new URLSearchParams(window.location.search);
+for (let [key, value] of urlParams) {
+  settings[key] = value;
+}
+const settingsComponent = new SettingsComponent(settings);
 
 
 const treeViewNode = $('.app-treeview')[0];
@@ -30,10 +34,29 @@ const treeViewComponent = new TreeView(treeViewNode);
 const defaultFilePath = location.hash && location.hash.replace('#', '') || 'webpack/webpack.common.js';
 treeViewComponent.file(defaultFilePath);
 
+const updateQuerySettings = (settings: ISettings) => {
+  const urlParams = new URLSearchParams(location.search);
+
+  Object.keys(settings).forEach((key) => {
+    if (settings[key]) {
+      urlParams.set(key, settings[key]);
+    } else {
+      urlParams.delete(key);
+    }
+  });
+
+  const search = urlParams.toString();
+  const url = `/?${ search }${ location.hash }`;
+
+  history.replaceState(settings, 'Webpack Config Generator', url);
+}
+
+const updateQuerySettings$ = settingsComponent.settings$
+.pipe(skip(1))
+.pipe(tap(updateQuerySettings));
 
 const filesList$ = settingsComponent.settings$
 .pipe(map((settings) => getFiles(settings)));
-
 
 const updateTreeView$ = filesList$
 .pipe(tap((files) => treeViewComponent.next(Object.keys(files))));
@@ -75,5 +98,6 @@ const download$ = downloadComponent.event$
 merge(
   renderFile$,
   updateTreeView$,
-  download$
+  download$,
+  updateQuerySettings$
 ).subscribe();
