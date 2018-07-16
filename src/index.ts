@@ -46,7 +46,7 @@ const updateQuerySettings = (settings: ISettings) => {
   });
 
   const search = urlParams.toString();
-  const url = `/?${ search }${ location.hash }`;
+  const url = `${ location.pathname }?${ search }${ location.hash }`;
 
   history.replaceState(settings, 'Webpack Config Generator', url);
 }
