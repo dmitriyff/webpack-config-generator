@@ -59,7 +59,7 @@ const TS_LOADER = [
 ];
 
 const FILE_LOADER = [
-    '"file-loader": "^1.1.11"'
+    '"file-loader": "^3.0.1"'
 ];
 
 const URL_LOADER = [
