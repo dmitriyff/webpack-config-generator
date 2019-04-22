@@ -83,7 +83,7 @@ let devDependencies = [
     '"webpack-dev-server": "^3.1.4"',
     '"webpack-merge": "^4.1.3"',
     '"optimize-css-assets-webpack-plugin": "^5.0.1"',
-    '"uglifyjs-webpack-plugin": "^1.2.7"'
+    '"uglifyjs-webpack-plugin": "^2.1.2"'
 ];
 
 useExtractPlugin && devDependencies.push(...EXTRACT_PLUGIN);
