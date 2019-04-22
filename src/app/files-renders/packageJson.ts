@@ -67,7 +67,7 @@ const URL_LOADER = [
 ];
 
 const RESOLVE_URL_LOADER = [
-    '"resolve-url-loader": "^2.3.0"'
+    '"resolve-url-loader": "^3.1.0"'
 ];
 
 const SVG_SPRITE_LOADER = [
