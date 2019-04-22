@@ -71,7 +71,7 @@ const RESOLVE_URL_LOADER = [
 ];
 
 const SVG_SPRITE_LOADER = [
-  '"svg-sprite-loader": "^3.8.0"'
+    '"svg-sprite-loader": "^4.1.3"'
 ];
 
 let devDependencies = [
