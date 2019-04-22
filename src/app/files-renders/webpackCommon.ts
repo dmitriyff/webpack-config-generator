@@ -67,7 +67,7 @@ let alias = useAssetsLoader ? `alias: {
         assets: path.join(srcDir, 'assets')
       },` : '';
 
-const ASSETS_LOADER = `const ASSETS_LOADER = [
+const ASSETS_RULES = `const ASSETS_RULES = [
     ${ assetsLoaders.join(', ') }
   ];
 `;
@@ -146,7 +146,7 @@ useSassLoader && styleLoaders.push(SASS_LOADER);
 useLessLoader && styleLoaders.push(LESS_LOADER);
 useStylusLoader && styleLoaders.push(STYLUS_LOADER);
 
-const STYLE_LOADER = `const STYLE_LOADER = [
+const STYLE_RULES = `const STYLE_RULES = [
     ${ styleLoaders.join(', ') }
   ];
 `;
@@ -182,7 +182,7 @@ const PUG_LOADER = `{
 const templateLoaders = [HTML_LOADER];
 usePugEngine && templateLoaders.push(PUG_LOADER);
 
-const TEMPLATE_LOADER = `const TEMPLATE_LOADER = [
+const TEMPLATE_RULES = `const TEMPLATE_RULES = [
     ${ templateLoaders.join(', ') }
   ];
 `;
@@ -209,23 +209,23 @@ const useCompiler = useBabelLoader || useTsLoader;
 useBabelLoader && compilerLoaders.push(BABEL_LOADER);
 useTsLoader && compilerLoaders.push(TS_LOADER);
 
-const COMPILER_LOADER = `const COMPILER_LOADER = [
+const COMPILER_RULES = `const COMPILER_RULES = [
     ${ compilerLoaders.join(', ') }
   ];
 `;
 
 // Add loaders to rules.
 const rules = [];
-useStyleLoader && rules.push('...STYLE_LOADER');
-useTemplateEngine && rules.push('...TEMPLATE_LOADER');
-useCompiler && rules.push('...COMPILER_LOADER');
-useAssetsLoader && rules.push('...ASSETS_LOADER');
+useStyleLoader && rules.push('...STYLE_RULES');
+useTemplateEngine && rules.push('...TEMPLATE_RULES');
+useCompiler && rules.push('...COMPILER_RULES');
+useAssetsLoader && rules.push('...ASSETS_RULES');
 
 const loaders = [];
-useStyleLoader && loaders.push(STYLE_LOADER);
-useTemplateEngine && loaders.push(TEMPLATE_LOADER);
-useCompiler && loaders.push(COMPILER_LOADER);
-useAssetsLoader && loaders.push(ASSETS_LOADER);
+useStyleLoader && loaders.push(STYLE_RULES);
+useTemplateEngine && loaders.push(TEMPLATE_RULES);
+useCompiler && loaders.push(COMPILER_RULES);
+useAssetsLoader && loaders.push(ASSETS_RULES);
 
   return `// Native dependencies.
 const path = require('path');
