@@ -20,7 +20,7 @@ export default function packageJsonRender({
 useExtractPlugin = useStyleLoader && useExtractPlugin;
 
 const EXTRACT_PLUGIN = [
-    '"mini-css-extract-plugin": "^0.4.1"'
+    '"mini-css-extract-plugin": "^0.6.0"'
 ];
 
 const STYLE_LOADER = [
