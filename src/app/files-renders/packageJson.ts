@@ -24,8 +24,8 @@ const EXTRACT_PLUGIN = [
 ];
 
 const STYLE_LOADER = [
-    '"css-loader": "^0.28.11"',
-    '"style-loader": "^0.21.0"'
+    '"css-loader": "^2.1.1"',
+    '"style-loader": "^0.23.0"'
 ];
 
 const SASS_LOADER = [
