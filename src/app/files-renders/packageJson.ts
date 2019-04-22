@@ -54,8 +54,8 @@ const BABEL_LOADER = [
 ];
 
 const TS_LOADER = [
-    '"ts-loader": "^4.4.2"',
-    '"typescript": "^3.0.0-dev.20180706"'
+    '"ts-loader": "^5.3.3"',
+    '"typescript": "^3.4.4"'
 ];
 
 const FILE_LOADER = [
