@@ -48,10 +48,9 @@ const PUG_HTML_LOADER = [
 ];
 
 const BABEL_LOADER = [
-    '"babel-core": "^6.26.3"',
-    '"babel-loader": "^7.1.5"',
-    '"babel-preset-env": "^1.7.0"',
-    '"babel-plugin-transform-runtime": "^6.23.0"'
+    '"@babel/core": "^7.4.3"',
+    '"@babel/preset-env": "^7.4.3"',
+    '"babel-loader": "^8.0.5"'
 ];
 
 const TS_LOADER = [
