@@ -82,7 +82,7 @@ let devDependencies = [
     '"webpack-cli": "^3.0.8"',
     '"webpack-dev-server": "^3.1.4"',
     '"webpack-merge": "^4.1.3"',
-    '"optimize-css-assets-webpack-plugin": "^4.0.3"',
+    '"optimize-css-assets-webpack-plugin": "^5.0.1"',
     '"uglifyjs-webpack-plugin": "^1.2.7"'
 ];
 
