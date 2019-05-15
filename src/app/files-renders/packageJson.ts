@@ -14,7 +14,9 @@ export default function packageJsonRender({
 
     useFileLoader,
     useUrlLoader,
-    useSvgSpriteLoader
+    useSvgSpriteLoader,
+
+    useReact
 }: ISettings): string {
 
 useExtractPlugin = useStyleLoader && useExtractPlugin;
@@ -102,7 +104,22 @@ useSvgSpriteLoader && devDependencies.push(...SVG_SPRITE_LOADER);
 
 (useFileLoader || useUrlLoader) && useSassLoader && devDependencies.push(...RESOLVE_URL_LOADER);
 
-	return `{
+const REACT_DEPENDENCIES = [
+    '"react": "^16.8.6"',
+    '"react-dom": "^16.8.6"'
+];
+
+const TYPES_REACT = [
+    '"@types/react": "^16.8.17"',
+    '"@types/react-dom": "^16.8.4"'
+];
+
+let dependencies = [];
+
+useReact && dependencies.push(...REACT_DEPENDENCIES);
+useReact && useTsLoader && devDependencies.unshift(...TYPES_REACT);
+
+return `{
   "name": "webpack-config-generator",
   "version": "0.0.1",
   "description": "",
@@ -119,7 +136,9 @@ useSvgSpriteLoader && devDependencies.push(...SVG_SPRITE_LOADER);
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    ${ dependencies.join(',\n    ') }
+  },
   "devDependencies": {
     ${ devDependencies.join(',\n    ') }
   }

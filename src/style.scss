@@ -55,6 +55,7 @@ main {
   display: flex;
   flex-basis: 100%;
   margin-top: 64px;
+  overflow: hidden;
 
   section {
     overflow-y: auto;

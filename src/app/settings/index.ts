@@ -1,7 +1,7 @@
 import './style.scss';
 
-import { BehaviorSubject, Observable, fromEvent, merge, combineLatest } from 'rxjs';
-import { map, tap, startWith } from 'rxjs/operators'
+import { BehaviorSubject, Observable, fromEvent, merge, combineLatest as combine } from 'rxjs';
+import { map, tap, startWith, combineLatest } from 'rxjs/operators'
 
 const $ = (selector: string): HTMLElement  => {
   return document.querySelector(selector);
@@ -27,6 +27,8 @@ export interface ISettings {
   useUrlLoader?: boolean;
   urlLimit?: number;
   useSvgSpriteLoader?: boolean;
+
+  useReact?: boolean;
 }
 
 export const DEFAULT_SETTING: ISettings = {
@@ -48,7 +50,9 @@ export const DEFAULT_SETTING: ISettings = {
   useFileLoader: false,
   useUrlLoader: false,
   urlLimit: 8196,
-  useSvgSpriteLoader: false
+  useSvgSpriteLoader: false,
+
+  useReact: false
 }
 
 export default class SettingsComponent {
@@ -93,11 +97,21 @@ export default class SettingsComponent {
     const assetsLoader$ = useFileLoader$
     .pipe(tap(toggleDisabled(assetsLoader))); 
 
+    // Jsx.
+    const useReact$ = getCheckboxObservable('#use-react', this._settings.useReact);
+
     // Others
     const entry$ = useTsLoader$
-    .pipe(map((useTsLoader) => useTsLoader ? 'index.ts' : 'index.js'));
+    .pipe(combineLatest(useReact$))
+    .pipe(map(([useTsLoader, useReact]) =>
+      (useTsLoader ? 'index.ts' : 'index.js') + (useReact ? 'x' : '')));
     const extensions$ = useTsLoader$
-    .pipe(map((useTsLoader) => useTsLoader ? ['\'.ts\'', '\'.js\''] : ['\'.js\'']));
+    .pipe(combineLatest(useReact$))
+    .pipe(map(([useTsLoader, useReact]) =>
+      ['\'.js\'', ...(useReact ? ['\'.jsx\''] : []), 
+                  ...(useTsLoader ? ['\'.ts\''] : []),
+                  ...(useReact && useTsLoader ? ['\'.tsx\''] : [])
+      ]));
 
     merge(
       styleLoader$,
@@ -106,7 +120,7 @@ export default class SettingsComponent {
     ).subscribe();
 
 
-    combineLatest(
+    combine(
       // Style preprocessors.
       useStyleLoader$.pipe(map((useStyleLoader) => ({ useStyleLoader }))),
       useExractPlugin$.pipe(map((useExtractPlugin) => ({ useExtractPlugin }))),
@@ -123,6 +137,8 @@ export default class SettingsComponent {
       useFileLoader$.pipe(map((useFileLoader) => ({ useFileLoader }))),
       useUrlLoader$.pipe(map((useUrlLoader) => ({ useUrlLoader }))),
       useSvgSpriteLoader$.pipe(map((useSvgSpriteLoader) => ({ useSvgSpriteLoader }))),
+      // Jsx,
+      useReact$.pipe(map((useReact) => ({ useReact }))),
       // Others
       entry$.pipe(map((entry) => ({ entry }))),
       extensions$.pipe(map((extensions) => ({ extensions }))),

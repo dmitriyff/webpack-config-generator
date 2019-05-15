@@ -6,6 +6,8 @@ import { default as srcIndexRender } from './srcIndex';
 import { default as srcStyleCssRender } from './srcStyleCss';
 import { default as srcIndexHtmlRender } from './srcIndexHtml';
 import { default as srcIndexPugRender } from './srcIndexPug';
+import { default as srcIndexTsxRender } from './srcIndexTsx';
+import { default as srcIndexJsxRender } from './srcIndexJsx';
 
 import { default as webpackDevRender } from './webpackDev';
 import { default as webpackProdRender } from './webpackProd';
@@ -31,7 +33,9 @@ export function getFiles({
   usePugEngine,
 
   useBabelLoader,
-  useTsLoader
+  useTsLoader,
+
+  useReact
 }: ISettings = DEFAULT_SETTING): IFiles {
   const files = {
     'webpack/webpack.common.js': webpackCommonRender,
@@ -67,9 +71,17 @@ export function getFiles({
   }
 
   if (useTsLoader) {
-    files['src/index.ts'] = srcIndexRender;
+    if (useReact) {
+      files['src/index.tsx'] = srcIndexTsxRender;
+    } else {
+      files['src/index.ts'] = srcIndexRender;
+    }
   } else {
-    files['src/index.js'] = srcIndexRender;
+    if (useReact) {
+      files['src/index.jsx'] = srcIndexJsxRender;
+    } else {
+      files['src/index.js'] = srcIndexRender;
+    }
   }
 
   if (useBabelLoader) {

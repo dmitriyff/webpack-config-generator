@@ -19,7 +19,9 @@ export default function webpackCommonRender({
   useFileLoader,
   useUrlLoader,
   urlLimit,
-  useSvgSpriteLoader
+  useSvgSpriteLoader,
+
+  useReact
 }:ISettings): string {
 
 // Assets loaders.
@@ -63,7 +65,8 @@ useFileLoader && assetsLoaders.push(FILE_LOADER);
 useUrlLoader && assetsLoaders.push(URL_LOADER);
 useSvgSpriteLoader && assetsLoaders.push(SVG_SPRITE_LOADER);
 
-let alias = useAssetsLoader ? `alias: {
+let alias = useAssetsLoader ? `
+      alias: {
         assets: path.join(srcDir, 'assets')
       },` : '';
 
@@ -197,7 +200,7 @@ const BABEL_LOADER = `{
     }`;
 
 const TS_LOADER = `{
-      test: /\\.ts/,
+      test: /\\.${ useReact ? '(ts|tsx)' : 'ts'}/,
       exclude: /node_modules/,
       use: [{
         loader: 'ts-loader'
@@ -251,8 +254,8 @@ module.exports = (env, {
       filename: '[name].[hash].js'
     },
 
-    resolve: {
-      ${ alias }
+    resolve: {${
+      alias }
       extensions: [${ extensions.join(', ') }]
     },
 
